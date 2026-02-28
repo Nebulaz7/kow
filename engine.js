@@ -123,7 +123,8 @@ const player = {
     vx: 0, vy: 0,
     onGround: false, facing: 1,
     invincible: 0, swordSwing: 0,
-    animFrame: 0, animTimer: 0
+    animFrame: 0, animTimer: 0,
+    jumpsLeft: 2          // double jump support
 };
 
 function resetPlayer() {
@@ -132,6 +133,7 @@ function resetPlayer() {
     player.onGround = false;
     player.invincible = 0;
     player.swordSwing = 0;
+    player.jumpsLeft = 2;
 }
 
 // ── Arrows ──────────────────────────────────────────────
@@ -273,10 +275,17 @@ function updatePlayerPhysics(currentAct, onGameOver, onExitRight) {
     if (keyLeft())  { player.vx -= PLAYER_SPEED * 0.4; player.facing = -1; }
     if (keyRight()) { player.vx += PLAYER_SPEED * 0.4; player.facing = 1; }
 
-    if (keyUp() && player.onGround) {
-        player.vy = JUMP_FORCE;
-        player.onGround = false;
-        sfxJump();
+    // Double jump – must release and re-press to trigger second jump
+    if (keyUp()) {
+        if (player._jumpReleased && player.jumpsLeft > 0) {
+            player.vy = JUMP_FORCE;
+            player.onGround = false;
+            player.jumpsLeft--;
+            player._jumpReleased = false;
+            sfxJump();
+        }
+    } else {
+        player._jumpReleased = true;
     }
 
     if (attackCooldown > 0) attackCooldown--;
@@ -305,7 +314,7 @@ function updatePlayerPhysics(currentAct, onGameOver, onExitRight) {
     for (const p of platforms) {
         if (aabb(player, p)) {
             if (player.vy > 0 && player.y + player.h - player.vy <= p.y + 4) {
-                player.y = p.y - player.h; player.vy = 0; player.onGround = true;
+                player.y = p.y - player.h; player.vy = 0; player.onGround = true; player.jumpsLeft = 2;
             } else if (player.vy < 0 && player.y - player.vy >= p.y + p.h - 4) {
                 player.y = p.y + p.h; player.vy = 0;
             } else if (player.vx > 0 && player.x + player.w - player.vx <= p.x + 2) {
