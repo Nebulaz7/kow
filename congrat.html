@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight of Winterfell – Victory</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Victory-specific overrides */
+        .victory-screen {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(180deg, #070720 0%, #0f1035 50%, #1a1640 100%);
+            z-index: 100;
+            transition: opacity 0.8s ease;
+        }
+
+        .victory-screen canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .victory-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 700px;
+            width: 90%;
+            padding: 20px;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .victory-crown {
+            font-size: 72px;
+            margin-bottom: 12px;
+            animation: pulse 2.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.7));
+        }
+
+        .victory-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow:
+                0 0 15px rgba(255, 215, 0, 0.6),
+                3px 3px 0 #8b6914,
+                4px 4px 0 #000;
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+        }
+
+        .victory-subtitle {
+            font-size: 18px;
+            color: #aaa;
+            letter-spacing: 4px;
+            margin-bottom: 24px;
+        }
+
+        .epilogue-text {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            color: #d0d0e0;
+            line-height: 1.8;
+            text-shadow: 1px 1px 0 #000;
+            text-align: center;
+            max-height: 40vh;
+            overflow-y: auto;
+            padding: 0 10px;
+            margin-bottom: 24px;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,215,0,0.3) transparent;
+        }
+
+        .epilogue-text p {
+            margin-bottom: 12px;
+        }
+
+        .epilogue-text strong {
+            color: #ffd700;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+        }
+
+        .stats {
+            display: inline-flex;
+            gap: 30px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 14px 28px;
+            margin-bottom: 24px;
+            font-size: 16px;
+            color: #ccc;
+        }
+
+        .stats .label { color: #888; font-size: 13px; display: block; }
+        .stats .value { color: #ffd700; font-size: 22px; font-weight: bold; }
+
+        .play-again {
+            margin-top: 10px;
+        }
+
+        .credits {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #444;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="victory-screen" id="victoryScreen">
+        <canvas id="bgCanvas"></canvas>
+
+        <div class="victory-content" id="victoryContent" style="opacity: 0;">
+            <div class="victory-crown">👑</div>
+            <div class="victory-title">VICTORY</div>
+            <div class="victory-subtitle">━━ HONOR RESTORED ━━</div>
+
+            <div class="epilogue-text" id="epilogueText"></div>
+
+            <div class="stats" id="statsBox" style="display: none;">
+                <div><span class="label">FINAL XP</span><span class="value" id="finalXP">0</span></div>
+                <div><span class="label">LIVES LEFT</span><span class="value" id="finalLives">0</span></div>
+                <div><span class="label">TITLE</span><span class="value" id="finalTitle">—</span></div>
+            </div>
+
+            <br>
+
+            <button class="start-button play-again" id="playAgainBtn" style="display: none;">
+                ⚔️ PLAY AGAIN ⚔️
+            </button>
+
+            <p class="credits">A RETRO HTML5 ADVENTURE · KNIGHT OF WINTERFELL</p>
+        </div>
+    </div>
+
+    <script>
+    (function () {
+        "use strict";
+
+        // ── Starfield background ────────────────────────
+        const c = document.getElementById("bgCanvas");
+        const ctx = c.getContext("2d");
+        let sw, sh;
+        const stars = [];
+
+        function resize() {
+            sw = c.width = window.innerWidth;
+            sh = c.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        for (let i = 0; i < 180; i++) {
+            stars.push({
+                x: Math.random() * 2000,
+                y: Math.random() * 1400,
+                s: Math.random() * 2.5 + 0.5,
+                b: Math.random() * 0.8 + 0.2,
+                sp: Math.random() * 0.1 + 0.02
+            });
+        }
+
+        let running = true;
+        (function drawBg() {
+            if (!running) return;
+            ctx.clearRect(0, 0, sw, sh);
+            for (const s of stars) {
+                const f = 0.6 + Math.sin(Date.now() * 0.002 * s.sp + s.x) * 0.4;
+                ctx.fillStyle = `rgba(255,255,200,${s.b * f})`;
+                ctx.fillRect(s.x % sw, s.y % sh, s.s, s.s);
+                s.y += s.sp * 0.5;
+                if (s.y > sh + 5) { s.y = -3; s.x = Math.random() * sw; }
+            }
+            requestAnimationFrame(drawBg);
+        })();
+
+        // ── Epilogue text (typewriter) ──────────────────
+        const epilogueLines = [
+            "The silver cage shatters. Princess **Elara** falls into the Knight's arms, trembling but safe.",
+            "Together, they walk out of the crumbling Shadow Fortress as dawn breaks over the kingdom.",
+            "The journey home is long, but the path is clear — the monsters have scattered, the curse is broken.",
+            "At the gates of **Winterfell**, the King meets them with tears of joy. The kingdom erupts in celebration.",
+            "Wedding bells ring from the highest tower. The Squire, now **Sir Knight**, receives his seat at the Round Table.",
+            "His name is etched in stone, just as the Royal Proclamation promised.",
+            "The Kingdom of Winterfell enters a new golden age — one forged by courage, honor, and an unbreakable will.",
+            "━━━━━━━━━━━━━━━━━━",
+            "**THE END**"
+        ];
+
+        const el = document.getElementById("epilogueText");
+        let para = 0, charIdx = 0, displayedHTML = "";
+        const speed = 30;
+
+        function typeNext() {
+            if (para >= epilogueLines.length) { finishEpilogue(); return; }
+            const text = epilogueLines[para];
+            if (charIdx < text.length) {
+                charIdx++;
+                renderText();
+                setTimeout(typeNext, speed);
+            } else {
+                displayedHTML += text + "\n\n";
+                para++;
+                charIdx = 0;
+                setTimeout(typeNext, 300);
+            }
+        }
+
+        function renderText() {
+            const current = epilogueLines[para].substring(0, charIdx);
+            const html = (displayedHTML + current)
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>');
+            el.innerHTML = '<p>' + html + '</p>';
+            el.scrollTop = el.scrollHeight;
+        }
+
+        function finishEpilogue() {
+            displayedHTML = epilogueLines.join("\n\n");
+            const html = displayedHTML
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n\n/g, '</p><p>');
+            el.innerHTML = '<p>' + html + '</p>';
+            el.scrollTop = el.scrollHeight;
+
+            // Show stats
+            const xp = parseInt(localStorage.getItem("kow_xp")) || 0;
+            const lives = parseInt(localStorage.getItem("kow_lives")) || 0;
+            document.getElementById("finalXP").textContent = xp;
+            document.getElementById("finalLives").textContent = lives;
+
+            let title = "Brave Squire";
+            if (xp >= 500) title = "Legendary Knight";
+            else if (xp >= 350) title = "Champion";
+            else if (xp >= 200) title = "Knight";
+            document.getElementById("finalTitle").textContent = title;
+
+            const statsBox = document.getElementById("statsBox");
+            statsBox.style.display = "inline-flex";
+            statsBox.style.opacity = "0";
+            statsBox.style.transition = "opacity 0.6s ease";
+            setTimeout(() => { statsBox.style.opacity = "1"; }, 100);
+
+            const btn = document.getElementById("playAgainBtn");
+            setTimeout(() => {
+                btn.style.display = "inline-block";
+                btn.style.opacity = "0"; btn.style.transition = "opacity 0.6s ease";
+                setTimeout(() => { btn.style.opacity = "1"; }, 100);
+            }, 600);
+        }
+
+        // ── Skip support ────────────────────────────────
+        let skipped = false;
+        window.addEventListener("keydown", e => {
+            if ((e.code === "Enter" || e.code === "Escape") && !skipped) {
+                skipped = true;
+                finishEpilogue();
+            }
+        });
+
+        // ── Play Again ──────────────────────────────────
+        document.getElementById("playAgainBtn").addEventListener("click", () => {
+            localStorage.removeItem("kow_xp");
+            localStorage.removeItem("kow_lives");
+            running = false;
+            document.body.style.transition = "opacity 0.6s";
+            document.body.style.opacity = "0";
+            setTimeout(() => { window.location.href = "index.html"; }, 700);
+        });
+
+        // ── Start with fade-in ──────────────────────────
+        const content = document.getElementById("victoryContent");
+        setTimeout(() => {
+            content.style.transition = "opacity 1.2s ease";
+            content.style.opacity = "1";
+            setTimeout(typeNext, 800);
+        }, 300);
+
+    })();
+    </script>
+</body>
+</html>
