@@ -1,0 +1,190 @@
+:root {
+    --forest-dark: #0f1f14;
+    --forest-mid: #2f5e38;
+    --forest-light: #6bbf73;
+    --moss: #b8ffb8;
+    --wood-shadow: rgba(0, 0, 0, 0.6);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #eaffea;
+
+    /* Forest Background */
+    background:
+        linear-gradient(rgba(10,20,12,0.75), rgba(10,20,12,0.85)),
+        url("photo_5843562272368823806_x.jpg") center/cover no-repeat;
+}
+strong{
+    color:#e40f0f
+};/* Soft vignette */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, transparent 55%, rgba(0,0,0,0.75));
+    pointer-events: none;
+}
+
+/* Main Layout */
+.main-container {
+    position: relative;
+    text-align: center;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* Subtitle */
+.subtitle {
+    color: var(--moss);
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.intro-controls {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 14px 28px;
+    margin-bottom: 24px;};
+
+    .control-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.control-row kbd {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color:#ffffff;
+    min-width: 36px;
+    text-align: center;
+}
+
+/* Title */
+.main-title {
+    font-size: 72px;
+    text-transform: uppercase;
+    line-height: 1;
+    text-shadow:
+        0 0 10px rgba(100,255,150,0.4),
+        0 0 30px rgba(60,200,90,0.3);
+}
+
+/* Gradient Text */
+.gradient-text {
+    background: linear-gradient(to right, #caffca, var(--forest-light), #2e5e33);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Divider */
+.divider {
+    width: 140px;
+    height: 4px;
+    margin: 25px auto;
+    background: linear-gradient(to right, transparent, var(--moss), transparent);
+}
+
+/* Buttons Container */
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Base Button */
+.btn {
+    font-family: 'VT323', monospace;
+    font-size: 28px;
+    padding: 14px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: 0.25s ease;
+    backdrop-filter: blur(5px);
+}
+
+/* Primary Button */
+.btn-primary {
+    background: var(--forest-mid);
+    border: 3px solid var(--moss);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--forest-light);
+    box-shadow: 0 0 25px rgba(120,255,150,0.6);
+    transform: scale(1.05);
+}
+
+/* Secondary Buttons */
+.btn-secondary {
+    background: rgba(20, 40, 25, 0.85);
+    border: 2px solid #3e6b45;
+    color: #d4ffd4;
+}
+
+.btn-secondary:hover {
+    background: rgba(80, 150, 90, 0.4);
+    border-color: var(--moss);
+    transform: translateX(10px);
+}
+
+/* Exit Button */
+.btn-exit {
+    background: rgba(40, 20, 20, 0.8);
+    border: 2px solid #5a2c2c;
+    color: #ffbdbd;
+}
+
+.btn-exit:hover {
+    background: rgba(120, 40, 40, 0.6);
+    border-color: #ff6b6b;
+    color: white;
+    transform: translateX(10px);
+}
+
+/* Footer */
+.version {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    color: #bde6bd;
+}
+
+.footer-left {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 12px;
+    color: #bde6bd;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
