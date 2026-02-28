@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight of Winterfell – Act I</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ═══════════ FULL-SCREEN STORY ═══════════ -->
+    <div id="story-screen"
+         data-story="🏰 The Legend of the Knight of Winterfell||Prologue: The Shadow over the Spire||The Kingdom of Winterfell was a land of eternal spring and golden light — until the blood-moon rose.||From the jagged peaks of the Shadow Realm, Count **Dracula** descended in a whirlwind of bats, breaching the palace gardens and snatching **Princess Elara**.||Desperate and broken, the King issued a Royal Proclamation:||&quot;To any man who returns my daughter safely, I grant her hand in marriage, half the kingdom's treasury, and a seat at the Round Table. Your name shall be etched in stone for eternity.&quot;||While the veteran knights hesitated, fearing the vampire's curse, a young Squire-in-training gripped his rusted iron sword. He had no titles and no land, only a heart full of courage and a name he was determined to make honorable.||━━━━━━━━━━━━━━━━━━||⚔️ Act I: The Morning of Trials||Setting: The Sun-Drenched Outskirts of Winterfell.||The journey begins at dawn. The Squire sets out through the rolling hills, but the path is already crawling with Dracula's scouts — lowly **Slimes** and forest **Goblins** meant to deter the weak.||The Squire is unseasoned. He must use his **Sword** to cut through the monsters, absorbing their essence to gain the Experience needed to survive the trek.||He must navigate treacherous pits and moving platforms, proving his agility. As the sun reaches its peak, he finds a discarded Royal Longbow near a fallen scout — a weapon he will need for the perils ahead."
+         data-next="">
+        <canvas id="storyCanvas"></canvas>
+        <div id="story-container">
+            <div id="story-text"></div>
+            <span id="story-cursor">▮</span>
+        </div>
+        <p id="skip-hint">Hold <kbd>Space</kbd> to speed up · <kbd>Enter</kbd> to skip</p>
+        <button id="continue-btn" class="start-button" style="display:none;">
+            ⚔️ ENTER THE MORNING FIELDS ⚔️
+        </button>
+    </div>
+
+    <!-- ═══════════ GAME SCREEN ═══════════ -->
+    <div id="game-wrapper" class="hidden">
+        <div id="hud">
+            <span class="hearts" id="hearts"></span>
+            <span class="act-title" id="actTitle"></span>
+            <span class="xp" id="xpCounter"></span>
+        </div>
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+        <div id="overlay">
+            <div class="title" id="overlayTitle"></div>
+            <div class="subtitle" id="overlaySubtitle"></div>
+            <div class="prompt" id="overlayPrompt"></div>
+        </div>
+    </div>
+
+    <script src="story.js"></script>
+    <script src="engine.js"></script>
+    <script src="act-1.js"></script>
+</body>
+</html>

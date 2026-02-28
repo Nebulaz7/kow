@@ -6,13 +6,349 @@
 }
 
 body {
-    background: #111;
+    background: #0a0a1e;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     overflow: hidden;
     font-family: 'Courier New', monospace;
+    color: #fff;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FULL-SCREEN INTRO PAGE
+   ═══════════════════════════════════════════════════════════ */
+#intro-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #070720 0%, #0f1035 40%, #1a1640 70%, #0d1a0d 100%);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+#intro-screen.fade-out {
+    opacity: 0;
+    transform: scale(1.05);
+    pointer-events: none;
+}
+
+#intro-screen.hidden {
+    display: none;
+}
+
+/* Stars canvas behind everything */
+#introCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* Content layer */
+.intro-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 640px;
+    padding: 20px;
+    animation: fadeInUp 1.2s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Emblem */
+.intro-emblem {
+    font-size: 64px;
+    margin-bottom: 8px;
+    animation: pulse 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 200, 50, 0.5));
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.08); }
+}
+
+/* Title */
+.intro-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 6px;
+}
+
+.title-line {
+    font-size: 62px;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow:
+        0 0 10px rgba(255, 215, 0, 0.6),
+        3px 3px 0 #8b6914,
+        4px 4px 0 #000;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+
+.title-of {
+    font-size: 22px;
+    color: #aaa;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    margin: -2px 0;
+}
+
+/* Divider */
+.intro-divider {
+    color: #555;
+    font-size: 14px;
+    letter-spacing: 4px;
+    margin: 14px 0;
+}
+
+/* Lore text */
+.intro-lore {
+    font-size: 16px;
+    color: #c8c8d4;
+    line-height: 1.7;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.intro-lore strong {
+    color: #ff4444;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+.intro-lore.small {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 20px;
+}
+
+/* Controls box */
+.intro-controls {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 14px 28px;
+    margin-bottom: 24px;
+}
+
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #aaa;
+}
+
+.control-row kbd {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 3px 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #ffd700;
+    min-width: 36px;
+    text-align: center;
+}
+
+/* Start button */
+.start-button {
+    display: inline-block;
+    background: linear-gradient(180deg, #c8a020 0%, #8b6914 100%);
+    color: #fff;
+    font-family: 'Courier New', monospace;
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    border: 2px solid #ffd700;
+    border-radius: 6px;
+    padding: 16px 48px;
+    cursor: pointer;
+    text-shadow: 2px 2px 0 #000;
+    box-shadow:
+        0 0 20px rgba(255, 215, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transition: all 0.2s ease;
+    animation: btnGlow 2s ease-in-out infinite;
+}
+
+.start-button:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 0 30px rgba(255, 215, 0, 0.5),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, #dab830 0%, #a07a18 100%);
+}
+
+.start-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+}
+
+@keyframes btnGlow {
+    0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); }
+    50%      { box-shadow: 0 0 35px rgba(255, 215, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.2); }
+}
+
+.btn-icon {
+    font-size: 20px;
+}
+
+/* Hint */
+.intro-hint {
+    margin-top: 14px;
+    font-size: 12px;
+    color: #555;
+    animation: blink 1.2s step-end infinite;
+}
+
+.intro-hint kbd {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 11px;
+    color: #888;
+}
+
+/* Ground silhouette */
+.intro-ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.intro-ground svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FULL-SCREEN STORY SCREEN (per-act auto-typing pages)
+   ═══════════════════════════════════════════════════════════ */
+#story-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, #070720 0%, #0f1035 50%, #1a1640 100%);
+    transition: opacity 0.8s ease;
+}
+
+#story-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+#storyCanvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+#story-container {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+    width: 90%;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding: 20px 10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,215,0,0.3) transparent;
+}
+
+#story-text {
+    font-family: 'Courier New', monospace;
+    font-size: 17px;
+    color: #d0d0e0;
+    line-height: 1.8;
+    text-shadow: 1px 1px 0 #000;
+    text-align: center;
+}
+
+#story-text p {
+    margin-bottom: 12px;
+}
+
+#story-text strong {
+    color: #ff4444;
+    text-shadow: 0 0 8px rgba(255, 0, 0, 0.4);
+}
+
+#story-cursor {
+    display: inline;
+    color: #ffd700;
+    font-size: 20px;
+    animation: blink 0.7s step-end infinite;
+    margin-left: 2px;
+}
+
+#skip-hint {
+    position: fixed;
+    bottom: 100px;
+    z-index: 5;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+}
+
+#skip-hint kbd {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 12px;
+    color: #888;
+    font-family: 'Courier New', monospace;
+}
+
+#continue-btn {
+    position: fixed;
+    bottom: 40px;
+    z-index: 5;
+    transition: opacity 0.5s ease;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   GAME SCREEN
+   ═══════════════════════════════════════════════════════════ */
+#game-wrapper {
+    position: relative;
+    width: 800px;
+    height: 500px;
+}
+
+#game-wrapper.hidden {
+    display: none;
 }
 
 #gameCanvas {
@@ -20,7 +356,6 @@ body {
     image-rendering: crisp-edges;
     border: 3px solid #555;
     display: block;
-    /* subtle CRT / retro filter */
     filter: contrast(1.05) saturate(1.1);
 }
 
@@ -58,7 +393,7 @@ body {
     letter-spacing: 2px;
 }
 
-/* ===== Screen Overlays ===== */
+/* ===== In-Game Overlays (Game Over / Win) ===== */
 #overlay {
     position: absolute;
     top: 0;
@@ -106,11 +441,4 @@ body {
 
 @keyframes blink {
     50% { opacity: 0; }
-}
-
-/* wrapper to center canvas + hud */
-#game-wrapper {
-    position: relative;
-    width: 800px;
-    height: 500px;
 }

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knight of Winterfell – Act II</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ═══════════ FULL-SCREEN STORY ═══════════ -->
+    <div id="story-screen"
+         data-story="⚔️ Act II: The Crimson Sunset||Setting: The Rugged Highland Passes.||As the sky turns a bruised orange and purple, the Squire reaches the mountain pass leading to the Shadow Realm. The air grows thin, and the enemies grow wings.||**Gargoyles** and **Giant Bats** dive from the cliffs. The Squire can no longer rely on his sword alone.||He masters the **Bow and Arrow**, sniping aerial threats while timing his jumps across crumbling stone bridges.||With every monster slain, his confidence grows. He is no longer just a &quot;Squire&quot;; the villagers he passes begin to whisper of the &quot;**Knight of Winterfell**.&quot;||He reaches the iron gates of Dracula's castle just as the last sliver of sun vanishes..."
+         data-next="">
+        <canvas id="storyCanvas"></canvas>
+        <div id="story-container">
+            <div id="story-text"></div>
+            <span id="story-cursor">▮</span>
+        </div>
+        <p id="skip-hint">Hold <kbd>Space</kbd> to speed up · <kbd>Enter</kbd> to skip</p>
+        <button id="continue-btn" class="start-button" style="display:none;">
+            🏹 ENTER THE HIGHLAND PASSES 🏹
+        </button>
+    </div>
+
+    <!-- ═══════════ GAME SCREEN ═══════════ -->
+    <div id="game-wrapper" class="hidden">
+        <div id="hud">
+            <span class="hearts" id="hearts"></span>
+            <span class="act-title" id="actTitle"></span>
+            <span class="xp" id="xpCounter"></span>
+        </div>
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+        <div id="overlay">
+            <div class="title" id="overlayTitle"></div>
+            <div class="subtitle" id="overlaySubtitle"></div>
+            <div class="prompt" id="overlayPrompt"></div>
+        </div>
+    </div>
+
+    <script src="story.js"></script>
+    <script src="engine.js"></script>
+    <script src="act-2.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knight of Winterfell</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- ═══════════ FULL-SCREEN INTRO PAGE ═══════════ -->
+    <div id="intro-screen">
+      <!-- Animated stars background via canvas -->
+      <canvas id="introCanvas"></canvas>
+
+      <div class="intro-content">
+        <div class="intro-emblem">⚔️</div>
+        <h1 class="intro-title">
+          <span class="title-line">Knight</span>
+          <span class="title-of">of</span>
+          <span class="title-line">Winterfell</span>
+        </h1>
+        <div class="intro-divider">━━━━━━━━━━━━━━━━━━</div>
+        <p class="intro-lore">
+          The King has issued a royal decree: rescue the Princess from the
+          vampire <strong>Dracula</strong>, and you shall receive wealth and her
+          hand in marriage.
+        </p>
+        <p class="intro-lore small">
+          Navigate three acts of peril — from the green fields of morning,
+          through the rocky sunset, to the dark gothic night — to become the
+          hero the kingdom needs.
+        </p>
+
+        <div class="intro-controls">
+          <div class="control-row">
+            <kbd>W A S D</kbd> / <kbd>Arrows</kbd> <span>Move &amp; Jump</span>
+          </div>
+          <div class="control-row"><kbd>Space</kbd> <span>Attack</span></div>
+          <div class="control-row"><kbd>R</kbd> <span>Restart</span></div>
+        </div>
+
+        <button id="startBtn" class="start-button">
+          <span class="btn-icon">🗡️</span> BEGIN YOUR QUEST
+          <span class="btn-icon">🛡️</span>
+        </button>
+        <p class="intro-hint">Press <kbd>Space</kbd> or click to begin</p>
+      </div>
+
+      <!-- Decorative bottom silhouette -->
+      <div class="intro-ground">
+        <svg viewBox="0 0 800 80" preserveAspectRatio="none">
+          <path
+            d="M0,80 L0,50 Q50,20 100,45 Q150,60 200,35 Q250,10 300,40 Q350,55 400,30 Q450,15 500,45 Q550,60 600,35 Q650,10 700,40 Q750,55 800,30 L800,80 Z"
+            fill="#1a3a1a"
+          />
+          <path
+            d="M0,80 L0,60 Q60,35 120,55 Q180,70 240,45 Q300,25 360,50 Q420,65 480,40 Q540,20 600,50 Q660,65 720,45 Q760,30 800,50 L800,80 Z"
+            fill="#0d260d"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // ── Animated starfield ──────────────────────────
+        const c = document.getElementById("introCanvas");
+        if (!c) return;
+        const ctx = c.getContext("2d");
+        let sw, sh;
+        const stars = [];
+
+        function resize() {
+          sw = c.width = window.innerWidth;
+          sh = c.height = window.innerHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        for (let i = 0; i < 140; i++) {
+          stars.push({
+            x: Math.random() * 2000,
+            y: Math.random() * 1400,
+            s: Math.random() * 2 + 0.5,
+            b: Math.random() * 0.8 + 0.2,
+            sp: Math.random() * 0.08 + 0.02,
+          });
+        }
+
+        (function draw() {
+          ctx.clearRect(0, 0, sw, sh);
+          for (const s of stars) {
+            const f = 0.6 + Math.sin(Date.now() * 0.002 * s.sp + s.x) * 0.4;
+            ctx.fillStyle = `rgba(255,255,255,${s.b * f})`;
+            ctx.fillRect(s.x % sw, s.y % sh, s.s, s.s);
+            s.y += s.sp;
+            if (s.y > sh + 5) {
+              s.y = -3;
+              s.x = Math.random() * sw;
+            }
+          }
+          requestAnimationFrame(draw);
+        })();
+
+        // ── Clear any previous save data ────────────────
+        localStorage.removeItem("kow_xp");
+        localStorage.removeItem("kow_lives");
+
+        // ── Navigate to Act 1 ───────────────────────────
+        function startGame() {
+          document.getElementById("intro-screen").classList.add("fade-out");
+          setTimeout(() => {
+            window.location.href = "act-1.html";
+          }, 800);
+        }
+
+        document
+          .getElementById("startBtn")
+          .addEventListener("click", startGame);
+        window.addEventListener("keydown", (e) => {
+          if (e.code === "Space" || e.code === "Enter") {
+            e.preventDefault();
+            startGame();
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
