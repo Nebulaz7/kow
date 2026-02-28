@@ -2,7 +2,7 @@
 // 🏹  ACT-2.JS – The Crimson Sunset
 // ═══════════════════════════════════════════════════════════
 const ACT = 2;
-const XP_NEEDED = 250;   // XP to unlock exit to Act 3
+const XP_NEEDED =145;   // XP to unlock exit to Act 3
 
 window.launchActGame = function () {
     "use strict";
