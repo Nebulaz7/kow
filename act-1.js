@@ -2,14 +2,14 @@
 // ⚔️  ACT-1.JS – The Morning of Trials
 // ═══════════════════════════════════════════════════════════
 const ACT = 1;
-const XP_NEEDED = 100;   // XP to unlock exit to Act 2
+const XP_NEEDED = 45;   // XP    to unlock exit to Act 2
 
 window.launchActGame = function () {
     "use strict";
 
     // Reset state for Act 1 (fresh game)
     resetState();
-
+ 
     // ── Level layout ────────────────────────────────────
     platforms = [
         // Ground segments with pits
@@ -136,10 +136,5 @@ window.launchActGame = function () {
         ctx.restore();
     }
 
-    function loop() {
-        update();
-        draw();
-        requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
+    startGameLoop(update, draw);
 };

@@ -732,3 +732,33 @@ function drawExitIndicator() {
         ctx.fillText("→ EXIT →", W - 50, H / 2);
     }
 }
+
+// ═════════════════════════════════════════════════════════
+//  FRAME-RATE CAPPED GAME LOOP  (target 60 FPS)
+// ═════════════════════════════════════════════════════════
+const TARGET_FPS = 60;
+const FRAME_TIME = 1000 / TARGET_FPS;   // ≈ 8.33 ms
+
+function startGameLoop(updateFn, drawFn) {
+    let lastTime = 0;
+    let accumulator = 0;
+
+    function loop(timestamp) {
+        if (!lastTime) lastTime = timestamp;
+        const delta = timestamp - lastTime;
+        lastTime = timestamp;
+
+        // Clamp large deltas (e.g. tab was hidden)
+        accumulator += Math.min(delta, 200);
+
+        // Run fixed-step updates until we've caught up
+        while (accumulator >= FRAME_TIME) {
+            updateFn();
+            accumulator -= FRAME_TIME;
+        }
+
+        drawFn();
+        requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+}

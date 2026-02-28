@@ -59,7 +59,6 @@
     let currentPara = 0;
     let charIndex = 0;
     let typingSpeed = 28;        // ms per character
-    let fastSpeed = 6;           // ms when holding space
     let currentSpeed = typingSpeed;
     let typingDone = false;
     let allDone = false;
@@ -176,20 +175,7 @@
     }
 
     // ── Keyboard controls ───────────────────────────────────
-    let spaceHeld = false;
     window.addEventListener("keydown", e => {
-        if (e.code === "Space") {
-            e.preventDefault();
-            if (allDone) {
-                continueToGame();
-                return;
-            }
-            // Hold space to speed up
-            if (!spaceHeld) {
-                spaceHeld = true;
-                currentSpeed = fastSpeed;
-            }
-        }
         if (e.code === "Escape" || e.code === "Enter") {
             e.preventDefault();
             if (allDone) {
@@ -197,13 +183,6 @@
             } else {
                 skipToEnd();
             }
-        }
-    });
-
-    window.addEventListener("keyup", e => {
-        if (e.code === "Space") {
-            spaceHeld = false;
-            currentSpeed = typingSpeed;
         }
     });
 

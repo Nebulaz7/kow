@@ -135,10 +135,5 @@ window.launchActGame = function () {
         ctx.restore();
     }
 
-    function loop() {
-        update();
-        draw();
-        requestAnimationFrame(loop);
-    }
-    requestAnimationFrame(loop);
+    startGameLoop(update, draw);
 };

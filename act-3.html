@@ -1,45 +1,46 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Knight of Winterfell – Act III</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <!-- ═══════════ FULL-SCREEN STORY ═══════════ -->
-    <div id="story-screen"
-         data-story="⚔️ Act III: The Midnight Reckoning||Setting: The Grand Hall of the Shadow Fortress.||The final act takes place in the heart of darkness. Cold marble floors, flickering candles, and the sound of a ticking clock.||At the far end of the hall, the **Princess** is trapped in a cage of enchanted silver.||**Dracula** emerges from the shadows, mocking the &quot;boy&quot; who thinks he can play hero.||The battle is a test of everything learned. The Knight must dodge Dracula's **teleportation strikes** and **fireball volleys**.||Using a combination of **sword strikes** when Dracula is close and **arrows** when he teleports away, the Knight must wear the Count down.||With one final, honorable blow... the vampire shatters into a cloud of mist.||The fate of the kingdom rests on this final battle."
-         data-next="">
-        <canvas id="storyCanvas"></canvas>
-        <div id="story-container">
-            <div id="story-text"></div>
-            <span id="story-cursor">▮</span>
-        </div>
-        <p id="skip-hint">Hold <kbd>Space</kbd> to speed up · <kbd>Enter</kbd> to skip</p>
-        <button id="continue-btn" class="start-button" style="display:none;">
-            🗡️ FACE DRACULA 🗡️
-        </button>
+    <div
+      id="story-screen"
+      data-story='⚔️ Act III: The Midnight Reckoning||Setting: The Grand Hall of the Shadow Fortress.||The final act takes place in the heart of darkness. Cold marble floors, flickering candles, and the sound of a ticking clock.||At the far end of the hall, the **Princess** is trapped in a cage of enchanted silver.||**Dracula** emerges from the shadows, mocking the "boy" who thinks he can play hero.||The battle is a test of everything learned. The Knight must dodge Dracula&apos;s **teleportation strikes** and **fireball volleys**.||Using a combination of **sword strikes** when Dracula is close and **arrows** when he teleports away, the Knight must wear the Count down.||With one final, honorable blow... the vampire shatters into a cloud of mist.||The fate of the kingdom rests on this final battle.'
+      data-next=""
+    >
+      <canvas id="storyCanvas"></canvas>
+      <div id="story-container">
+        <div id="story-text"></div>
+        <span id="story-cursor">▮</span>
+      </div>
+      <p id="skip-hint">Press <kbd>Enter</kbd> to skip</p>
+      <button id="continue-btn" class="start-button" style="display: none">
+        🗡️ FACE DRACULA 🗡️
+      </button>
     </div>
 
     <!-- ═══════════ GAME SCREEN ═══════════ -->
     <div id="game-wrapper" class="hidden">
-        <div id="hud">
-            <span class="hearts" id="hearts"></span>
-            <span class="act-title" id="actTitle"></span>
-            <span class="xp" id="xpCounter"></span>
-        </div>
-        <canvas id="gameCanvas" width="800" height="500"></canvas>
-        <div id="overlay">
-            <div class="title" id="overlayTitle"></div>
-            <div class="subtitle" id="overlaySubtitle"></div>
-            <div class="prompt" id="overlayPrompt"></div>
-        </div>
+      <div id="hud">
+        <span class="hearts" id="hearts"></span>
+        <span class="act-title" id="actTitle"></span>
+        <span class="xp" id="xpCounter"></span>
+      </div>
+      <canvas id="gameCanvas" width="800" height="500"></canvas>
+      <div id="overlay">
+        <div class="title" id="overlayTitle"></div>
+        <div class="subtitle" id="overlaySubtitle"></div>
+        <div class="prompt" id="overlayPrompt"></div>
+      </div>
     </div>
 
     <script src="story.js"></script>
     <script src="engine.js"></script>
     <script src="act-3.js"></script>
-</body>
+  </body>
 </html>
