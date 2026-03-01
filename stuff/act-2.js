@@ -2,7 +2,7 @@
 // 🏹  ACT-2.JS – The Crimson Sunset
 // ═══════════════════════════════════════════════════════════
 const ACT = 2;
-const XP_NEEDED =145;   // XP to unlock exit to Act 3
+const XP_NEEDED =130;   // XP to unlock exit to Act 3
 
 window.launchActGame = function () {
     "use strict";
@@ -95,10 +95,10 @@ window.launchActGame = function () {
     // ── Game Loop ───────────────────────────────────────
     function update() {
         if (gameOver) {
-            if (keyRestart()) { resetState(); window.location.href = "act-1.html"; }
+            if (keyRestart()) { resetState(); window.location.href = "act-2.html"; }
             return;
         }
-        if (keyRestart()) { resetState(); window.location.href = "act-1.html"; }
+        if (keyRestart()) { resetState(); window.location.href = "act-2.html"; }
 
         updatePlayerPhysics(ACT, onGameOver, xp >= XP_NEEDED ? onExitRight : null);
         updateEnemies(onGameOver);

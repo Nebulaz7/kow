@@ -90,11 +90,11 @@ window.launchActGame = function () {
     // ── Game Loop ───────────────────────────────────────
     function update() {
         if (gameOver) {
-            if (keyRestart()) { resetState(); window.location.href = "act-1.html"; }
+            if (keyRestart()) { resetState(); window.location.href = "act-3.html"; }
             return;
         }
         if (won) return;
-        if (keyRestart()) { resetState(); window.location.href = "act-1.html"; }
+        if (keyRestart()) { resetState(); window.location.href = "act-3.html"; }
 
         updatePlayerPhysics(ACT, onGameOver, null);
         updateDracula(onGameOver, onBossDefeated);
